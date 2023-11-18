@@ -10,6 +10,7 @@ import UIKit
 class PokemonViewController: UIViewController {
     
     private let pokemonView = PokemonView()
+    private let pokemonViewModel = PokemonViewModel.shared
     
     override func loadView() {
         super.loadView()
@@ -20,6 +21,9 @@ class PokemonViewController: UIViewController {
         super.viewDidLoad()
         setupNavBar()
         setupDelegatesAndDataSources()
+        pokemonViewModel.fetchPokemon { pokemon in
+            print(pokemon)
+        }
     }
     
     private func setupNavBar() {
