@@ -13,8 +13,7 @@ class PokemonView: UIView {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.backgroundColor = .systemRed
+        collectionView.register(PokemonCell.self, forCellWithReuseIdentifier: PokemonCell.identifier)
         return collectionView
     }()
     
