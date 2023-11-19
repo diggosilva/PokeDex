@@ -18,6 +18,7 @@
 		926746EA2B090B9700F253C0 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926746E92B090B9700F253C0 /* Factory.swift */; };
 		926746EC2B09142000F253C0 /* PokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926746EB2B09142000F253C0 /* PokemonViewModel.swift */; };
 		926746EE2B09197E00F253C0 /* PokemonResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926746ED2B09197E00F253C0 /* PokemonResult.swift */; };
+		926746F12B091DD000F253C0 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 926746F02B091DD000F253C0 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				926746F12B091DD000F253C0 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +148,9 @@
 			dependencies = (
 			);
 			name = PokeDex;
+			packageProductDependencies = (
+				926746F02B091DD000F253C0 /* SDWebImage */,
+			);
 			productName = PokeDex;
 			productReference = 926746C62B09010000F253C0 /* PokeDex.app */;
 			productType = "com.apple.product-type.application";
@@ -174,6 +179,9 @@
 				Base,
 			);
 			mainGroup = 926746BD2B09010000F253C0;
+			packageReferences = (
+				926746EF2B091DD000F253C0 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 926746C72B09010000F253C0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -421,6 +429,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		926746EF2B091DD000F253C0 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.18.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		926746F02B091DD000F253C0 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 926746EF2B091DD000F253C0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 926746BE2B09010000F253C0 /* Project object */;
 }

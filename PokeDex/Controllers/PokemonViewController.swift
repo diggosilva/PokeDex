@@ -11,6 +11,7 @@ class PokemonViewController: UIViewController {
     
     private let pokemonView = PokemonView()
     private let pokemonViewModel = PokemonViewModel.shared
+    private var pokemons: [PokemonResult] = []
     
     override func loadView() {
         super.loadView()
@@ -21,8 +22,11 @@ class PokemonViewController: UIViewController {
         super.viewDidLoad()
         setupNavBar()
         setupDelegatesAndDataSources()
-        pokemonViewModel.fetchPokemon { pokemon in
-            print(pokemon)
+        pokemonViewModel.fetchPokemon { pokemonResult in
+            DispatchQueue.main.async {
+                self.pokemons = pokemonResult
+                self.pokemonView.collectionView.reloadData()
+            }
         }
     }
     
@@ -39,13 +43,17 @@ class PokemonViewController: UIViewController {
 
 extension PokemonViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return pokemons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.identifier, for: indexPath) as? PokemonCell else { return UICollectionViewCell() }
-        
+        cell.configure(model: pokemons[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
 
@@ -61,7 +69,7 @@ extension PokemonViewController: UICollectionViewDelegateFlowLayout {
     
     //MARK: - Espaço HORIZONTAL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

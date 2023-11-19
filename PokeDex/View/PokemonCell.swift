@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PokemonCell: UICollectionViewCell {
     
@@ -26,17 +27,16 @@ class PokemonCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "diggo")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     lazy var nameLabel: UILabel = {
-        Factory.buildLabel(text: "Diggo", fontSize: .systemFont(ofSize: 14, weight: .bold), textColor: .white)
+        Factory.buildLabel(text: "", fontSize: .systemFont(ofSize: 14, weight: .bold), textColor: .white)
     }()
     
     lazy var typeLabel: UILabel = {
-        Factory.buildLabel(text: "Developer", fontSize: .systemFont(ofSize: 14, weight: .bold), textColor: .white, backgroundColor: UIColor(white: 1, alpha: 0.5), cornerRadius: 15)
+        Factory.buildLabel(text: "", fontSize: .systemFont(ofSize: 14, weight: .bold), textColor: .white, backgroundColor: UIColor(white: 1, alpha: 0.5), cornerRadius: 15)
     }()
     
     override init(frame: CGRect) {
@@ -46,6 +46,39 @@ class PokemonCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(model: PokemonResult) {
+        guard let url = URL(string: model.imageURL) else { return }
+        DispatchQueue.main.async {
+            self.imageView.sd_setImage(with: url)
+            self.nameLabel.text = model.name.capitalized
+            self.typeLabel.text = model.type.capitalized
+            self.cardImage.backgroundColor = self.colorsForTypes(type: model.type)
+            self.cardImage.layer.shadowColor = self.colorsForTypes(type: model.type).cgColor
+        }
+    }
+    
+    func colorsForTypes(type: String) -> UIColor {
+        switch type {
+        case "poison": return UIColor.systemGreen
+        case "fire": return UIColor.systemRed
+        case "water": return UIColor.systemCyan
+        case "bug": return UIColor.systemBrown
+        case "flying": return UIColor.systemBlue
+        case "electric": return UIColor.systemYellow
+        case "ground": return UIColor.systemGray
+        case "fairy": return UIColor.systemPink
+        case "grass": return #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+        case "fighting": return #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        case "psychic": return UIColor.systemIndigo
+        case "steel": return #colorLiteral(red: 0.7343749404, green: 0.7343749404, blue: 0.7343749404, alpha: 1)
+        case "ice": return #colorLiteral(red: 0.4832615852, green: 0.8721074462, blue: 1, alpha: 1)
+        case "rock": return UIColor.systemTeal
+        case "dragon": return UIColor.systemPurple
+        default:
+            return UIColor.magenta
+        }
     }
     
     private func setupView() {
