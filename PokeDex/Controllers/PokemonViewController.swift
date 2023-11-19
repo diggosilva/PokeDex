@@ -11,6 +11,7 @@ class PokemonViewController: UIViewController {
     
     private let pokemonView = PokemonView()
     private let pokemonViewModel = PokemonViewModel.shared
+    private let pokemonCell = PokemonCell()
     private var pokemons: [PokemonResult] = []
     
     override func loadView() {
@@ -53,7 +54,31 @@ extension PokemonViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pokemonSelected = pokemons[indexPath.item]
+        let detailsVC = PokemonDetailsViewController()
         
+        guard let url = URL(string: pokemonSelected.imageURL) else { return }
+        DispatchQueue.main.async {
+            detailsVC.imageView.sd_setImage(with: url)
+            detailsVC.nameLabel.text = pokemonSelected.name.capitalized
+            detailsVC.typeLabel.text = pokemonSelected.type
+            detailsVC.heightValueLabel.text = "\(pokemonSelected.height)"
+            detailsVC.attackValueLabel.text = "\(pokemonSelected.attack)"
+            detailsVC.defenseValueLabel.text = "\(pokemonSelected.defense)"
+            detailsVC.weightValueLabel.text = "\(pokemonSelected.weight)"
+            detailsVC.view.backgroundColor = self.pokemonCell.colorsForTypes(type: pokemonSelected.type)
+            detailsVC.typeLabel.backgroundColor = self.pokemonCell.colorsForTypes(type: pokemonSelected.type)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                UIView.animate(withDuration: 0.75) {
+                    detailsVC.heightProgressView.setProgress(Float(pokemonSelected.height) / 200, animated: true)
+                    detailsVC.attackProgressView.setProgress(Float(pokemonSelected.attack) / 200, animated: true)
+                    detailsVC.defenseProgressView.setProgress(Float(pokemonSelected.defense) / 200, animated: true)
+                    detailsVC.weightProgressView.setProgress(Float(pokemonSelected.weight) / 200, animated: true)
+                }
+            })
+        }
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
 

@@ -34,7 +34,7 @@ class Factory {
         return progressView
     }
     
-    static func buildHStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat = 30) -> UIStackView {
+    static func buildVStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat = 10) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: arrangedSubviews)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = axis
@@ -43,14 +43,14 @@ class Factory {
         return stack
     }
     
-    static func buildVStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat) -> UIStackView {
+    static func buildHStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat = 20) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: arrangedSubviews)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = axis
         stack.distribution = distribution
         stack.spacing = spacing
-        stack.isLayoutMarginsRelativeArrangement = true
-        stack.directionalLayoutMargins = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+//        stack.isLayoutMarginsRelativeArrangement = true
+//        stack.directionalLayoutMargins = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         return stack
     }
 }
